@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Covid19</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+
+  <style type="text/css">
+    body{
+      font-family: sans-serif;
+    }
+    header{
+      box-shadow: 0px 0px 5px 0px #6d6d6d;
+      padding: 8px 0;
+    }
+    .logo img{
+      width: 90px;
+      height: 80px;
+    }
+    .covid19{
+      font-size: 30px;
+      font-family: sans-serif;
+      font-weight: bold;
+      margin-top: 40px;
+    }
+    .form-control{
+      border-radius: 20px;
+    }
+    .table th{
+      font-size: 20px;
+    }
+  </style>
+</head>
+<body ng-app="myApp">
+
+  <header>
+    <div class="container">
+      <div class="logo">
+        <img src="img/logo.png">
+        <span class="covid19">Covid19</span>
+      </div>
+    </div>
+  </header>
+
+<br>
+  <div ng-controller="customersCtrl" class="container">
+
+    <div class="d-flex">
+      <h2 class="mr-auto text-danger">Covid19 StateWise record</h2>
+      <div class="p-2"><input type="text" ng-model='test' class="form-control" placeholder="Search your state"></div>
+    </div>
+    
+
+    <table class="table table-hover border">
+      <tr class="table-danger">
+        <th>State name</th>
+        <th>Active</th>
+        <th>Confirmed</th>
+        <th>Deaths</th>
+        <th>Recovered</th>
+      </tr>
+      <tr ng-repeat="x in names | orderBy:'state' | filter:test ">
+        <td>{{ x.state}}</td>
+        <td>{{ x.active}}</td>
+        <td>{{ x.confirmed}}</td>
+        <td>{{ x.deaths}}</td>
+        <td>{{ x.recovered}}</td>
+      </tr>
+    </table>
+
+    <div class="float-right">For open source API <a href="https://api.covid19india.org/data.json">click here</a>.</div>
+  </div>
+
+    <script>
+      var app = angular.module('myApp', []);
+      app.controller('customersCtrl', function($http,$rootScope) {
+          $http.get('https://api.covid19india.org/data.json')
+          .then(function (response) {
+            $rootScope.names = response.data.statewise;
+            console.log(response.data.statewise);
+          });
+      });
+
+      // fetch('https://api.covid19india.org/data.json')
+      // .then((apidata)=>{
+      //   return apidata.json();
+      // }).then((actualdata)=>{
+      //   var x = actualdata.statewise[3].state;
+      //   console.log(actualdata.statewise);
+      //   document.getElementById("demo").innerHTML = x; 
+      // }).catch((error)=>{
+      //   console.log(error);
+      // });
+    </script>
+</body>
+</html>
