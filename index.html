@@ -34,6 +34,16 @@
     .table th{
       font-size: 20px;
     }
+    .table{
+      width: max-content;
+      margin: auto;
+    }
+    @media screen and (max-width: 768px) {
+      .table{
+          width: auto;
+          margin: auto;
+        }
+    }
   </style>
 </head>
 <body ng-app="myApp">
@@ -57,20 +67,24 @@
     
 
     <table class="table table-hover border table-responsive">
-      <tr class="table-danger">
-        <th>State name</th>
-        <th>Active</th>
-        <th>Confirmed</th>
-        <th>Deaths</th>
-        <th>Recovered</th>
-      </tr>
-      <tr ng-repeat="x in names | orderBy:'state' | filter:test ">
-        <td>{{ x.state}}</td>
-        <td>{{ x.active}}</td>
-        <td>{{ x.confirmed}}</td>
-        <td>{{ x.deaths}}</td>
-        <td>{{ x.recovered}}</td>
-      </tr>
+      <thead>
+        <tr class="table-danger">
+          <th>State name</th>
+          <th>Active</th>
+          <th>Confirmed</th>
+          <th>Deaths</th>
+          <th>Recovered</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="x in names | orderBy:'state' | filter:test ">
+          <td>{{ x.state}}</td>
+          <td>{{ x.active}}</td>
+          <td>{{ x.confirmed}}</td>
+          <td>{{ x.deaths}}</td>
+          <td>{{ x.recovered}}</td>
+        </tr>
+      </tbody>
     </table>
 
     <div class="float-right p-2">For open source API <a href="https://api.covid19india.org/data.json" target="_blank">click here</a>.</div>
